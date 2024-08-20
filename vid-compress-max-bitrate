@@ -1,0 +1,25 @@
+import ffmpeg
+import os
+
+def compress_video(input_file, output_file, crf=28, preset="medium", max_bitrate="1M"):
+    (
+        ffmpeg
+        .input(input_file)
+        .output(output_file, crf=crf, preset=preset, vcodec='libx264', maxrate=max_bitrate)
+        .run(overwrite_output=True)
+    )
+    
+    # Get file sizes
+    original_size = os.path.getsize(input_file)
+    output_size = os.path.getsize(output_file)
+    
+    # Print file sizes
+    print(f"Original size: {original_size / (1024 * 1024):.2f} MB")
+    print(f"Compressed size: {output_size / (1024 * 1024):.2f} MB")
+
+# Example usage
+input_video = r'/mnt/c/Users/fvazq/Escritorio/Photos-001(2)/VID_20200317_212919_807.mp4'
+output_video = r'/mnt/c/Users/fvazq/Escritorio/VID_20200317_212919_807.mp4'
+
+# Compress the video
+compress_video(input_video, output_video, crf=30, preset="slow", max_bitrate="1M")
