@@ -1,9 +1,9 @@
-import ffmpeg
+import ffmpeg as ffmpeg_lib
 import os
 
 def compress_video(input_file, output_file, crf=23, preset="medium"):
     (
-        ffmpeg
+        ffmpeg_lib
         .input(input_file)
         .output(output_file, crf=crf, preset=preset, vcodec='libx264')
         .run(overwrite_output=True)
@@ -17,9 +17,13 @@ def compress_video(input_file, output_file, crf=23, preset="medium"):
     print(f"Original size: {original_size / (1024 * 1024):.2f} MB")
     print(f"Compressed size: {output_size / (1024 * 1024):.2f} MB")
 
-# Example usage
-input_video = r'/mnt/c/Users/fvazq/Escritorio/Photos-001(2)/20220825_000354.mp4'
-output_video = r'/mnt/c/Users/fvazq/Escritorio/20220825_000354.mp4'
+def main():
+    # Get input and output file paths from the user
+    input_video = input("Enter the path of the input video file: ")
+    output_video = input("Enter the path where the compressed video should be saved: ")
 
-# Compress the video
-compress_video(input_video, output_video, crf=23, preset="slow")
+    # Compress the video
+    compress_video(input_video, output_video, crf=23, preset="slow")
+
+if __name__ == "__main__":
+    main()
